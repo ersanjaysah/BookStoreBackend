@@ -13,7 +13,6 @@ namespace BussinessLayer.Service
         public UserBL(IUserRL userRL)
         {
             this.userRL = userRL;
-
         }
 
        /// <summary>
@@ -28,12 +27,10 @@ namespace BussinessLayer.Service
             {
                 return this.userRL.Registration(userRegistration);
             }
-
             catch (Exception ex)
             {
                 throw ex;
             }
-
         }
 
         /// <summary>
@@ -66,7 +63,6 @@ namespace BussinessLayer.Service
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -86,7 +82,6 @@ namespace BussinessLayer.Service
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

@@ -109,7 +109,6 @@ namespace ReposatoryLayer.Service
                     this.sqlConnection.Close();
                     var Token = this.GenerateJWTToken(user.Email, UserId);
                     return Token;
-
                 }
                 else
                 {
@@ -126,9 +125,7 @@ namespace ReposatoryLayer.Service
             {
                 this.sqlConnection.Close();
             }
-
         }
-
 
         /// <summary>
         /// method used for generating JWT Token
@@ -148,7 +145,7 @@ namespace ReposatoryLayer.Service
                     new Claim("Email", Email),
                     new Claim("UserId",UserId.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = DateTime.UtcNow.AddHours(2),// valid for 2 hr
 
                 SigningCredentials =
                 new SigningCredentials(
@@ -164,7 +161,6 @@ namespace ReposatoryLayer.Service
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-
         public string ForgotPassword(string email)
         {
             try
@@ -179,7 +175,6 @@ namespace ReposatoryLayer.Service
                 this.sqlConnection.Open();     //opening the connection
                 
                 SqlDataReader reader = cmd.ExecuteReader();  //execute all result to get all record
-                
                 if (reader.HasRows)   // for checking datareader has row or not
                 {
                     int UserId = 0;
@@ -193,7 +188,6 @@ namespace ReposatoryLayer.Service
                     this.sqlConnection.Close();   //connection opened
 
                     MessageQueue queue;
-
                     if (MessageQueue.Exists(@".\Private$\BookQueue"))  //Determine whether the queue exist in the given path .
                     {
                         queue = new MessageQueue(@".\Private$\BookQueue");
@@ -210,7 +204,6 @@ namespace ReposatoryLayer.Service
                     queue.ReceiveCompleted += new ReceiveCompletedEventHandler(msmqQueue_ReciveCompleted); //Added event handler for receive completed event
 
                     var token = this.GenerateJWTToken(email, UserId);
-
                     return token;
                 }
                 else
@@ -221,7 +214,6 @@ namespace ReposatoryLayer.Service
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -245,19 +237,16 @@ namespace ReposatoryLayer.Service
                     EmailService.SendMail(e.Message.ToString(), GenerateToken(e.Message.ToString())); // sending the msg to email.
                     queue.BeginReceive(); // here Re-starting the Async receive operation.
                 }
-
             }
             catch (MessageQueueException ex)
             {
-
-                if (ex.MessageQueueErrorCode == MessageQueueErrorCode.AccessDenied)
+            if (ex.MessageQueueErrorCode == MessageQueueErrorCode.AccessDenied)
                 {
                     Console.WriteLine("Access is denied. " + "Queue might be a system queue.");
                 }
                 // Handle other sources of MessageQueueException.
             }
         }
-
 
         private string GenerateToken(string email)
         {
@@ -325,10 +314,8 @@ namespace ReposatoryLayer.Service
                     return false;
                 }
             }
-
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

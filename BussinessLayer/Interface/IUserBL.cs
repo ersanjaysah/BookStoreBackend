@@ -9,7 +9,6 @@ namespace BussinessLayer.Interface
     {
         public UserRegistration Registration(UserRegistration userRegistration);
         public string UserLogin(UserLogin userLogin);
-
         public string ForgotPassword(string email);
         public bool ResetPassword(string email, string newPassword, string confirmPassword);
     }
