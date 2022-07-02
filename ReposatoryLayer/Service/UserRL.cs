@@ -16,9 +16,9 @@ namespace ReposatoryLayer.Service
     public class UserRL : IUserRL
     {
         private SqlConnection sqlConnection;
-        
         private readonly IConfiguration configuration;
-        public UserRL(IConfiguration configuration)
+        //Iconfig.. represents the set of key-value application configuration property
+        public UserRL(IConfiguration configuration) 
         {
             this.configuration = configuration;
         }
@@ -31,13 +31,14 @@ namespace ReposatoryLayer.Service
         /// <returns></returns>
         public UserRegistration Registration(UserRegistration userRegistration)
         {
-            sqlConnection = new SqlConnection(this.configuration["ConnectionStrings:BookStore"]);//sql connection string to book store
+            //sql connection connectingstring to book store
+            sqlConnection = new SqlConnection(this.configuration["ConnectionStrings:BookStore"]);
             try
             {
                 using (sqlConnection)
                 {
                     SqlCommand cmd = new SqlCommand("SPUserRegister", sqlConnection);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure; //command type is a class to set the store procedure
 
                     cmd.Parameters.AddWithValue("@FullName", userRegistration.FullName);
 
@@ -84,7 +85,7 @@ namespace ReposatoryLayer.Service
                 this.sqlConnection = new SqlConnection(this.configuration["ConnectionStrings:BookStore"]);
                 SqlCommand cmd = new SqlCommand("SPUserLogin", this.sqlConnection)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure //command type is a class to set the store procedure
                 };
 
                 cmd.Parameters.AddWithValue("@Email", userLogin.Email);
@@ -168,7 +169,7 @@ namespace ReposatoryLayer.Service
                 this.sqlConnection = new SqlConnection(this.configuration["ConnectionStrings:BookStore"]);
                 SqlCommand cmd = new SqlCommand("SPUserForgetPassword", this.sqlConnection)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure //command type is a class to set the store procedure
                 };
                 cmd.Parameters.AddWithValue("@Email", email);
                 
@@ -198,11 +199,12 @@ namespace ReposatoryLayer.Service
                     }
 
                     Message MyMessage = new Message(); //connecting the message to local computer
-                    MyMessage.Formatter = new BinaryMessageFormatter();  // formatter serializes the object into the stream and insert it into the body
+                    MyMessage.Formatter = new BinaryMessageFormatter();
+                    // formatter serializes the object into the stream and insert it into the body
                     MyMessage.Body = this.GenerateJWTToken(email, UserId);
                     EmailService.SendMail(email, MyMessage.Body.ToString()); // sending the mail.
-                    queue.ReceiveCompleted += new ReceiveCompletedEventHandler(msmqQueue_ReciveCompleted); //Added event handler for receive completed event
-
+                    queue.ReceiveCompleted += new ReceiveCompletedEventHandler(msmqQueue_ReciveCompleted);
+                    //Added event handler for receive completed event
                     var token = this.GenerateJWTToken(email, UserId);
                     return token;
                 }
@@ -286,33 +288,35 @@ namespace ReposatoryLayer.Service
         {
             try
             {
-                if (newPassword == confirmPassword) // here checking the condition
-                {
-                    this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
-                    SqlCommand command = new SqlCommand("SPUserResetPassword", this.sqlConnection)
+                
+                    this.sqlConnection = new SqlConnection(this.configuration["ConnectionStrings:BookStore"]);
+                    if (newPassword == confirmPassword) // here checking the condition
                     {
-                        CommandType = CommandType.StoredProcedure //Command type is a class to set as stored procedure
-                    };
+                        SqlCommand command = new SqlCommand("SPUserResetPassword", this.sqlConnection)
+                        {
+                            CommandType = CommandType.StoredProcedure //Command type is a class to set as stored procedure
+                        };
 
-                    command.Parameters.AddWithValue("@Email", email);
-                    command.Parameters.AddWithValue("@Password", confirmPassword);
+                        command.Parameters.AddWithValue("@Email", email);
+                        command.Parameters.AddWithValue("@Password", confirmPassword);
 
-                    this.sqlConnection.Open(); //opening the connection
-                    int qr = command.ExecuteNonQuery(); //execute the query for update , insert , delete
-                    this.sqlConnection.Close(); // closing the connection here
-                    if (qr > 0)
-                    {
-                        return true;
+                        this.sqlConnection.Open(); //opening the connection
+                        int qr = command.ExecuteNonQuery(); //execute the query for update , insert , delete
+                        this.sqlConnection.Close(); // closing the connection here
+                        if (qr >= 1)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
                         return false;
                     }
-                }
-                else
-                {
-                    return false;
-                }
+                
             }
             catch (Exception ex)
             {

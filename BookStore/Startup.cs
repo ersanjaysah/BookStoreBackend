@@ -23,7 +23,7 @@ namespace BookStore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration) //it represent a set of key value application configuration property
         {
             Configuration = configuration;
         }

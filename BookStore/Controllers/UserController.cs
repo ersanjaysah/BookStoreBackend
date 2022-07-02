@@ -109,8 +109,8 @@ namespace BookStore.Controllers
         {
             try
             {
-                var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
-               // var email = User.Claims.FirstOrDefault(e => e.Type == "Email").Value.ToString();
+                var email = User.Claims.FirstOrDefault(e => e.Type == "Email").Value.ToString();
+               
                 if (this.userBL.ResetPassword(email, newPassword, confirmPassword))
                 {
                     return this.Ok(new { Success = true, message = " Password Changed Successfully " });
