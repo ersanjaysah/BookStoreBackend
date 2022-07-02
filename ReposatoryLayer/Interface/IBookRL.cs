@@ -10,5 +10,7 @@ namespace ReposatoryLayer.Interface
         public BookModel AddBook(BookModel book);
         public BookModel GetBookByBookId(int BookId);
         bool UpdateBook(int BookId, BookModel updateBook);
+        public bool DeleteBook(int BookId);
+        public List<BookModel> GetAllBooks();
     }
 }

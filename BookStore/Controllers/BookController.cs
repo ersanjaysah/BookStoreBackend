@@ -74,5 +74,43 @@ namespace BookStore.Controllers
             }
         }
 
+       // [Authorize(Roles = Role.Admin)]
+        [HttpDelete("DeletBook/{BookId}")]
+        public IActionResult DeletBook(int BookId)
+        {
+            try
+            {
+                if (this.bookBL.DeleteBook(BookId))
+                {
+                    return this.Ok(new { Success = true, message = "Book Deleted Sucessfully", });
+                }
+                else { return this.BadRequest(new { Success = false, message = "Enter Valid BookId" }); }
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { Success = false, message = ex.Message });
+            }
+        }
+
+       // [Authorize(Roles = Role.User)]
+        [HttpGet("GetAllBooks")]
+        public IActionResult GetAllBook()
+        {
+            try
+            {
+                var result = this.bookBL.GetAllBooks();
+
+                if (result != null)
+                {
+                    return this.Ok(new { Success = true, message = "Book Detail Fetched Sucessfully", Response = result });
+                }
+                else { return this.BadRequest(new { Success = false, message = "Enter Valid BookId" }); }
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { Success = false, message = ex.Message });
+            }
+        }
+
     }
 }

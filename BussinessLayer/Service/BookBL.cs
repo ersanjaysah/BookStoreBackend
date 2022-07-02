@@ -26,6 +26,8 @@ namespace BussinessLayer.Service
             }
         }
 
+       
+
         public BookModel GetBookByBookId(int BookId)
         {
             try
@@ -43,6 +45,30 @@ namespace BussinessLayer.Service
             try
             {
                 return this.bookRL.UpdateBook(BookId, updateBook);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DeleteBook(int BookId)
+        {
+            try
+            {
+                return this.bookRL.DeleteBook(BookId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<BookModel> GetAllBooks()
+        {
+            try
+            {
+                return this.bookRL.GetAllBooks();
             }
             catch (Exception ex)
             {
