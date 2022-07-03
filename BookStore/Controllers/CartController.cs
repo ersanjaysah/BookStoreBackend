@@ -81,7 +81,6 @@ namespace BookStore.Controllers
         {
             try
             {
-               
                 var result = this.cartBL.GetAllBooksinCart(userId);
 
                 if (result != null)

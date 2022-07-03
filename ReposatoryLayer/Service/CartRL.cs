@@ -118,7 +118,6 @@ namespace ReposatoryLayer.Service
                     {
                         CartModel model = new CartModel();
                         BookModel bookModel = new BookModel();
-                        
                         model.CartId = Convert.ToInt32(reader["CartId"]);
                         bookModel.BookName = reader["BookName"].ToString();
                         bookModel.AuthorName = reader["AuthorName"].ToString();

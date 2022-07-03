@@ -11,6 +11,5 @@ namespace ReposatoryLayer.Interface
         string DeleteCart(int CartId);
         bool UpdateCart(int CartId, int BooksQty);
         List<CartModel> GetAllBooksinCart(int UserId);
-
     }
 }
