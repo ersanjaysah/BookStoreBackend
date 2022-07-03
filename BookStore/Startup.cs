@@ -43,6 +43,9 @@ namespace BookStore
             services.AddTransient<IAdminRL, AdminRL>();
             services.AddTransient<IAdminBL, AdminBL>();
 
+            services.AddTransient<ICartRL, CartRL>();
+            services.AddTransient<ICartBL, CartBL>();
+
             services.AddSwaggerGen(setup =>
             {
                 // Include 'SecurityScheme' to use JWT Authentication
