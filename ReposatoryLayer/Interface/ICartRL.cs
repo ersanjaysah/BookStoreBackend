@@ -10,6 +10,7 @@ namespace ReposatoryLayer.Interface
         string AddBookToCart(AddToCart cartBook);
         string DeleteCart(int CartId);
         bool UpdateCart(int CartId, int BooksQty);
+        List<CartModel> GetAllBooksinCart(int UserId);
 
     }
 }

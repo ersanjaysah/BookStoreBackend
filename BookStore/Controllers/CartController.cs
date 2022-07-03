@@ -3,6 +3,7 @@ using DatabaseLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace BookStore.Controllers
 {
@@ -74,6 +75,25 @@ namespace BookStore.Controllers
             }
         }
 
+        [Authorize(Roles = Role.User)]
+        [HttpGet("GetAllBooksInCart/{userId}")]
+        public IActionResult GetAllBookInCart(int userId)
+        {
+            try
+            {
+               
+                var result = this.cartBL.GetAllBooksinCart(userId);
 
+                if (result != null)
+                {
+                    return this.Ok(new { Success = true, message = "All Books Displayed in the cart Successfully", Response = result });
+                }
+                else { return this.BadRequest(new { Success = false, message = "Enter Valid UserId" }); }
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { Success = false, message = ex.Message });
+            }
+        }
     }
 }

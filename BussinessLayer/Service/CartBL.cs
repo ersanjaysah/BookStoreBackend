@@ -46,9 +46,21 @@ namespace BussinessLayer.Service
             {
                 return this.cartRL.UpdateCart(CartId, BooksQty);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
+            }
+        }
+
+        public List<CartModel> GetAllBooksinCart(int UserId)
+        {
+            try
+            {
+                return this.cartRL.GetAllBooksinCart(UserId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
