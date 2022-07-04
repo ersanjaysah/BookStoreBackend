@@ -8,7 +8,7 @@ using System.Linq;
 namespace BookStore.Controllers
 {
     [ApiController]  // Handle the Client error, Bind the Incoming data with parameters using more attribute
-    [Route("[controller]")]
+    [Route("[controller]")] //Controller is a class that handels the HTTP request
     public class CartController : ControllerBase
     {
         private readonly ICartBL cartBL;
@@ -18,9 +18,9 @@ namespace BookStore.Controllers
             this.cartBL = cartBL;
         }
 
-        [Authorize(Roles = Role.User)]
-        [HttpPost("AddBookToCart")]
-        public IActionResult AddToCart(AddToCart cart)
+        [Authorize(Roles = Role.User)] //it authorization is the process to veryfy specific data,file a user has to access
+        [HttpPost("AddBookToCart")] //HttpPost is used to send the data to server from Http client.
+        public IActionResult AddToCart(AddToCart cart) //IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -37,9 +37,9 @@ namespace BookStore.Controllers
             }
         }
 
-        [Authorize(Roles = Role.User)]
+        [Authorize(Roles = Role.User)] //it authorization is the process to veryfy specific data,file a user has to access
         [HttpDelete("Delete/{CartId}")]
-        public IActionResult DeletCart(int CartId)
+        public IActionResult DeletCart(int CartId) //IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -56,9 +56,9 @@ namespace BookStore.Controllers
             }
         }
 
-        [Authorize(Roles = Role.User)]
+        [Authorize(Roles = Role.User)] //it authorization is the process to veryfy specific data,file a user has to access
         [HttpPut("UpdateCart/{CartId}/{BooksQty}")]
-        public IActionResult UpdateCart(int CartId, int BooksQty)
+        public IActionResult UpdateCart(int CartId, int BooksQty) //IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -75,9 +75,9 @@ namespace BookStore.Controllers
             }
         }
 
-        [Authorize(Roles = Role.User)]
+        [Authorize(Roles = Role.User)] //it authorization is the process to veryfy specific data,file a user has to access
         [HttpGet("GetAllBooksInCart/{userId}")]
-        public IActionResult GetAllBookInCart(int userId)
+        public IActionResult GetAllBookInCart(int userId) //IActionResult is an interface that return multiple type of data.
         {
             try
             {

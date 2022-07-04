@@ -23,17 +23,18 @@ namespace ReposatoryLayer.Service
             try
             {
                 this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
+                //connecting the sql connection of book store
                 SqlCommand cmd = new SqlCommand("SPAddCart", this.sqlConnection)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure   //command type is a class to set the store procedure
                 };
                 //adding parameter to store procedure
                 cmd.Parameters.AddWithValue("@UserId", cartBook.UserId);
                 cmd.Parameters.AddWithValue("@BookId", cartBook.BookId);
                 cmd.Parameters.AddWithValue("@BooksQty", cartBook.BooksQty);
 
-                this.sqlConnection.Open();
-                cmd.ExecuteNonQuery();
+                this.sqlConnection.Open(); // opening the SQL connection
+                cmd.ExecuteNonQuery(); // it execute the query for update ,insert or delete.
                 return "book added in cart successfully";
             }
             catch (Exception ex)
@@ -44,7 +45,6 @@ namespace ReposatoryLayer.Service
             {
                 this.sqlConnection.Close();
             }
-
         }
 
         public string DeleteCart(int CartId)
@@ -52,14 +52,15 @@ namespace ReposatoryLayer.Service
             try
             {
                 this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:Bookstore"]);
+                // here connecting the SQL connection to the book store
                 SqlCommand cmd = new SqlCommand("spDeleteCart", this.sqlConnection)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure //command type is a class to set the store procedure
                 };
-
+                //Adding parameter to store procedure
                 cmd.Parameters.AddWithValue("@CartId", CartId);
-                sqlConnection.Open();
-                cmd.ExecuteScalar();
+                sqlConnection.Open(); //opening the connection
+                cmd.ExecuteScalar(); //it only returns the value from first column of the first row of the query.
                 return "Book Deleted in Cart Successfully";
             }
             catch (Exception ex)
@@ -77,15 +78,16 @@ namespace ReposatoryLayer.Service
             try
             {
                 this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:Bookstore"]);
+                // here connecting the SQL connection to the book store.
                 SqlCommand cmd = new SqlCommand("spUpdateCart", this.sqlConnection)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure //command type is a class to set the store procedure 
                 };
-
+                //Adding parameter to store procedure
                 cmd.Parameters.AddWithValue("@CartId", CartId);
                 cmd.Parameters.AddWithValue("@BooksQty", BooksQty);
-                sqlConnection.Open();
-                cmd.ExecuteScalar();
+                sqlConnection.Open();  //opening the sql connection
+                cmd.ExecuteScalar();  //It only returns the value of first row of first column of the query
                 return true;
             }
             catch (Exception ex)
@@ -103,23 +105,24 @@ namespace ReposatoryLayer.Service
             try
             {
                 this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
+                // here connecting the SQL connection to the book store.
                 SqlCommand cmd = new SqlCommand("SPGetAllBookinCart", this.sqlConnection)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure //command type is a class to set the store procedure
                 };
 
-                List<CartModel> cart = new List<CartModel>();
-                cmd.Parameters.AddWithValue("@UserId", UserId);
-                sqlConnection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.HasRows)
+                List<CartModel> cart = new List<CartModel>(); //creating the new instance of list of cartmodel class
+                cmd.Parameters.AddWithValue("@UserId", UserId); //adding parameter to store procedure
+                sqlConnection.Open();  // opening the connection of sql 
+                SqlDataReader reader = cmd.ExecuteReader(); // it returns the object that can iterate the entire result set.
+                if (reader.HasRows) // for checking datareader has row or not.
                 {
-                    while (reader.Read())
+                    while (reader.Read()) //call read before accessing data
                     {
-                        CartModel model = new CartModel();
-                        BookModel bookModel = new BookModel();
+                        CartModel model = new CartModel(); //creating new instance of cart model class
+                        BookModel bookModel = new BookModel(); //creating new instance of book model class
                         model.CartId = Convert.ToInt32(reader["CartId"]);
-                        bookModel.BookName = reader["BookName"].ToString();
+                        bookModel.BookName = reader["BookName"].ToString();//reader is used to read the record at a time.
                         bookModel.AuthorName = reader["AuthorName"].ToString();
                         bookModel.TotalRating = Convert.ToInt32(reader["TotalRating"]);
                         bookModel.RatingCount = Convert.ToInt32(reader["RatingCount"]);

@@ -9,7 +9,7 @@ using System.Security.Claims;
 namespace BookStore.Controllers
 {
     [ApiController] // used to binding the source by manually by applying attribute
-    [Route("[controller]")]
+    [Route("[controller]")] //Controller is a class that handels the HTTP request
     public class UserController : ControllerBase
     {
         private readonly IUserBL userBL;
@@ -25,7 +25,8 @@ namespace BookStore.Controllers
         /// <param name="userRegistration"></param>
         /// <returns></returns>
 
-         [HttpPost("Registration")]
+         [HttpPost("Registration")] //HttpPost is used to send the data to server from Http client.
+                                    //IActionResult is an interface that return multiple type of data.
         public IActionResult Registration(UserRegistration userRegistration)
         {
             try
@@ -49,8 +50,8 @@ namespace BookStore.Controllers
         /// <param name="userLogin"></param>
         /// <returns></returns>
 
-        [HttpPost("UserLogin")]
-        public IActionResult UserLogin(UserLogin userLogin)
+        [HttpPost("UserLogin")] //HttpPost is used to send the data to server from Http client.
+        public IActionResult UserLogin(UserLogin userLogin) //IActionResult is an interface return multiple type of data.
         {
             try
             {
@@ -76,7 +77,8 @@ namespace BookStore.Controllers
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        [HttpPost("ForgotPassword/{email}")]
+        [HttpPost("ForgotPassword/{email}")] //HttpPost is used to send the data to server from Http client.
+                                             //IActionResult is an interface that return multiple type of data.
         public IActionResult ForgotPassword(string email)
         {
             try
@@ -103,7 +105,7 @@ namespace BookStore.Controllers
         /// <param name="newPassword"></param>
         /// <param name="confirmPassword"></param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize] //veryfy the specific data ,file a user has to access
         [HttpPut("ResetPassword/{newPassword}/{confirmPassword}")]
         public IActionResult ResetPassword(string newPassword, string confirmPassword)
         {
