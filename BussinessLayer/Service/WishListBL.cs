@@ -35,10 +35,10 @@ namespace BussinessLayer.Service
             {
                 return this.wishlistRL.DeleteWishList(WishListId, UserId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -48,10 +48,9 @@ namespace BussinessLayer.Service
             {
                 return this.wishlistRL.GetWishlistByUserid(UserId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
         }
 

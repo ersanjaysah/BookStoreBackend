@@ -19,9 +19,9 @@ namespace BookStore.Controllers
             this.wishlistBL = wishListBL;
         }
 
-        [Authorize(Roles = Role.User)]
+        [Authorize(Roles = Role.User)] //it authorization is the process to veryfy specific data,file a user has to access
         [HttpPost("AddToWishList")]
-        public IActionResult AddToWishList(WishListModel wishlistModel)
+        public IActionResult AddToWishList(WishListModel wishlistModel) //IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -42,9 +42,9 @@ namespace BookStore.Controllers
             }
         }
 
-        [Authorize(Roles = Role.User)]
+        [Authorize(Roles = Role.User)] //it authorization is the process to veryfy specific data,file a user has to access
         [HttpDelete("DeleteWishList/{WishListId}")]
-        public IActionResult DeleteWishList(int WishListId, int userId)
+        public IActionResult DeleteWishList(int WishListId, int userId) //IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -65,9 +65,9 @@ namespace BookStore.Controllers
             }
         }
 
-        [Authorize(Roles = Role.User)]
+        [Authorize(Roles = Role.User)] //it authorization is the process to veryfy specific data,file a user has to access
         [HttpGet("GetWishlistByUserid/{UserId}")]
-        public IActionResult GetWishlistByUserid(int UserId)
+        public IActionResult GetWishlistByUserid(int UserId) //IActionResult is an interface that return multiple type of data.
         {
             try
             {

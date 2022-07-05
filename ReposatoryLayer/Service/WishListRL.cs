@@ -17,53 +17,27 @@ namespace ReposatoryLayer.Service
             this.Configuration = configuration;
         }
         private IConfiguration Configuration { get; }
-        //public WishListModel AddBookinWishList(WishListModel wishListModel, int userId)
-        //{
-        //    try
-        //    {
-        //        this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
-        //        SqlCommand cmd = new SqlCommand("SPAddInWishlist", this.sqlConnection)
-        //        {
-        //            CommandType = CommandType.StoredProcedure
-        //        };
-
-        //        cmd.Parameters.AddWithValue("@BookId", wishListModel.BookId);
-        //        cmd.Parameters.AddWithValue("@UserId", userId);
-        //        sqlConnection.Open();
-        //        cmd.ExecuteNonQuery();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    finally
-        //    {
-        //        sqlConnection.Close();
-        //    }
-        //}
-
+      
         public WishListModel AddToWishList(WishListModel wishlistModel, int UserId)
         {
 
             try
             {
                 this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
-
-
+                //connecting the sql connection of book store
                 SqlCommand cmd = new SqlCommand("SPAddInWishlist", this.sqlConnection)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure  //command type is a class to set the store procedure
                 };
                 using (sqlConnection)
                 {
-
                     cmd.CommandType = CommandType.StoredProcedure;
+                    //adding parameter to store procedure
                     cmd.Parameters.AddWithValue("@BookId", wishlistModel.BookId);
                     cmd.Parameters.AddWithValue("@UserId", UserId);
-                    sqlConnection.Open();
-                    int result = cmd.ExecuteNonQuery();
-                    sqlConnection.Close();
+                    sqlConnection.Open();   //opening the connection
+                    int result = cmd.ExecuteNonQuery();// it execute the query for update ,insert or delete.
+                    sqlConnection.Close(); //closeing the connection
                     if (result != 0)
                     {
                         return wishlistModel;
@@ -74,9 +48,9 @@ namespace ReposatoryLayer.Service
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -85,17 +59,18 @@ namespace ReposatoryLayer.Service
             try
             {
                 this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
+                //connecting the sql connection of book store
                 SqlCommand cmd = new SqlCommand("SPDeleteFromWishlist", this.sqlConnection)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure  //command type is a class to set the store procedure
                 };
-
+                //adding parameter to store procedure
                 cmd.Parameters.AddWithValue("@WishListId", WishListId);
 
-                this.sqlConnection.Open();
-                int res = cmd.ExecuteNonQuery();
-                this.sqlConnection.Close();
-                if (res == 0)
+                this.sqlConnection.Open();  //opening the connection
+                int res = cmd.ExecuteNonQuery();// it execute the query for update ,insert or delete.
+                this.sqlConnection.Close();   //closing the connection
+                if (res == 0) //checking the condition
                 {
                     return "succesful";
                 }
@@ -117,23 +92,24 @@ namespace ReposatoryLayer.Service
         public List<AddToWishList> GetWishlistByUserid(int UserId)
         {
             try
-
             {
                 this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
+                //connecting the sql connection of book store
                 using (sqlConnection)
                 {
                     SqlCommand cmd = new SqlCommand("SPGetAllBooksinWishList", sqlConnection);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;  //command type is a class to set the store procedure
+                                                                    //adding parameter to store procedure
                     cmd.Parameters.AddWithValue("@UserId", UserId);
                     sqlConnection.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.HasRows)
+                    SqlDataReader reader = cmd.ExecuteReader(); // it returns the object that can iterate the entire result set.
+                    if (reader.HasRows) // for checking datareader has row or not.
                     {
-                        List<AddToWishList> wishlistmodels = new List<AddToWishList>();
-                        while (reader.Read())
+                        List<AddToWishList> wishlistmodels = new List<AddToWishList>();//create a instance of a list
+                        while (reader.Read()) //call read before accessing data
                         {
-                            BookModel bookModel = new BookModel();
-                            AddToWishList WishlistModel = new AddToWishList();
+                            BookModel bookModel = new BookModel(); //creating the instance of book model
+                            AddToWishList WishlistModel = new AddToWishList(); // creating the instance of Add to wish list
                             bookModel.BookId = Convert.ToInt32(reader["BookId"]);
                             bookModel.BookName = reader["BookName"].ToString();
                             bookModel.AuthorName = reader["AuthorName"].ToString();
@@ -146,8 +122,7 @@ namespace ReposatoryLayer.Service
                             WishlistModel.bookModel = bookModel;
                             wishlistmodels.Add(WishlistModel);
                         }
-
-                        sqlConnection.Close();
+                        sqlConnection.Close(); // closing the connection
                         return wishlistmodels;
                     }
                     else
@@ -156,91 +131,10 @@ namespace ReposatoryLayer.Service
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
-
+                throw ex;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        //public bool DeleteBookinWishList(int WishlistId, int userId)
-        //{
-        //    sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
-        //    try
-        //    {
-        //        using (sqlConnection)
-        //        {
-        //            SqlCommand cmd = new SqlCommand("SPDeleteFromWishlist", sqlConnection);
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@WishListId", WishlistId);
-        //            cmd.Parameters.AddWithValue("@UserId", userId);
-        //            sqlConnection.Open();
-        //           int result= cmd.ExecuteNonQuery ();
-        //            sqlConnection.Close();
-        //            if(result!=0)
-        //            {
-        //                return true;
-        //            }
-        //            else
-        //            {
-        //                return false;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    finally
-        //    {
-        //        sqlConnection.Close();
-        //    }
-        //}
-
-        //public string DeleteBookinWishList(int WishListId, int UserId)
-        //{
-        //    try
-        //    {
-        //        this.sqlConnection = new SqlConnection(this.Configuration["ConnectionStrings:BookStore"]);
-        //        SqlCommand cmd = new SqlCommand("SPDeleteFromWishlist", this.sqlConnection)
-        //        {
-        //            CommandType = CommandType.StoredProcedure
-        //        };
-
-        //        cmd.Parameters.AddWithValue("@WishListId", WishListId);
-
-        //        this.sqlConnection.Open();
-        //        int res = cmd.ExecuteNonQuery();
-        //        this.sqlConnection.Close();
-        //        if (res == 0)
-        //        {
-        //            return "succesful";
-        //        }
-        //        else
-        //        {
-        //            return "failed";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    finally
-        //    {
-        //        this.sqlConnection.Close();
-        //    }
-
-        //}
     }
 }
