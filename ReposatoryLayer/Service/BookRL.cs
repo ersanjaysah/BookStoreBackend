@@ -37,7 +37,7 @@ namespace ReposatoryLayer.Service
                 cmd.Parameters.AddWithValue("@BookImage", book.BookImage);
                 cmd.Parameters.AddWithValue("@BookQuantity", book.BookQuantity);
                 this.sqlConnection.Open();
-                var result = cmd.ExecuteNonQuery();
+                var result = cmd.ExecuteNonQuery();// it execute the query for update ,insert or delete.
                 this.sqlConnection.Close();
                 if (result != 0)
                 {
