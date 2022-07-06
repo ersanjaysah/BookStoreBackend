@@ -22,7 +22,7 @@ namespace BookStore.Controllers
 
         [Authorize(Roles = Role.User)]
         [HttpPost("AddFeedback")]
-        public IActionResult AddFeedback(FeedBackModel feedbackmodel)
+        public IActionResult AddFeedback(FeedBackModel feedbackmodel) //IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -34,7 +34,7 @@ namespace BookStore.Controllers
                 }
                 else
                 {
-                    return this.BadRequest(new { Success = false, message = " Oops!!! Unable to add Feedback" });
+                    return this.BadRequest(new { Success = false, message = "Oops!!! Unable to add Feedback" });
                 }
             }
             catch (Exception ex)
@@ -43,20 +43,20 @@ namespace BookStore.Controllers
             }
         }
 
-
-        [HttpGet("Get/{BookId}")]
-        public IActionResult GetFeedback(int bookId)
+        [Authorize(Roles = Role.User)]
+        [HttpGet("GetFeedback/{BookId}")]
+        public IActionResult GetFeedback(int bookId) //IActionResult is an interface that return multiple type of data.
         {
             try
             {
                 var result = this.feedbackBL.GetAllFeedback(bookId);
                 if (result != null)
                 {
-                    return this.Ok(new { Status = true, Message = "Successfully Feedback For Given Book Id Fetched ANd Displayed ", Response = result });
+                    return this.Ok(new { Status = true, Message = "Successfully Feedback For Given BookId Fetched and Displayed ", Response = result });
                 }
                 else
                 {
-                    return this.BadRequest(new { Status = false, Message = " Enter Correct BookId" });
+                    return this.BadRequest(new { Status = false, Message = "Enter Correct BookId" });
                 }
             }
             catch (Exception ex)
