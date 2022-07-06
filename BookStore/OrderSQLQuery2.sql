@@ -33,10 +33,10 @@ begin
 						Update BookTable set BookQuantity=BookQuantity-@OrderBookQuantity where BookId = @BookId;
 						Delete from CartTable where BookId = @BookId and UserId = @UserId;
 						select * from Orders;
-						commit Transaction
+						commit Transaction ---Commit permanently saves the changes made by the current transaction
 					End try
 					Begin Catch
-							rollback; 
+							rollback; -- rollback Undo the changes made by the current Transaction
 					End Catch
 				end
 			Else
@@ -58,7 +58,7 @@ Create procedure SPGetOrders
 as
 begin
 		Select 
-		O.OrdersId, O.UserId, O.AddressId, b.bookId,
+		O.OrdersId, O.UserId, O.AddressId, b.bookId, --O=orderTable
 		O.TotalPrice, O.OrderBookQuantity, O.OrderDate,
 		b.BookName, b.AuthorName, b.BookImage
 		FROM BookTable b
