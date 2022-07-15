@@ -108,7 +108,7 @@ namespace BookStore.Controllers
         [Authorize] //veryfy the specific data ,file a user has to access
         [HttpPut("ResetPassword/{newPassword}/{confirmPassword}")]
         public IActionResult ResetPassword(string newPassword, string confirmPassword)
-        {
+        {       //IActionResult is an interface that return multiple type of data.
             try
             {
                 var email = User.Claims.FirstOrDefault(e => e.Type == "Email").Value.ToString();

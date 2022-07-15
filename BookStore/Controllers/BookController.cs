@@ -19,7 +19,7 @@ namespace BookStore.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost("AddBook")]
-        public IActionResult AddBook(BookModel book)
+        public IActionResult AddBook(BookModel book)//IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -38,7 +38,7 @@ namespace BookStore.Controllers
 
          [Authorize(Roles = Role.User)]
         [HttpGet("GetBookByBookId/{BookId}")]
-        public IActionResult GetBookByBookId(int BookId)
+        public IActionResult GetBookByBookId(int BookId)//IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -57,7 +57,7 @@ namespace BookStore.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPut("UpdateBook/{BookId}")]
-        public IActionResult UpdateBook(int BookId, BookModel Model)
+        public IActionResult UpdateBook(int BookId, BookModel Model)//IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -76,7 +76,7 @@ namespace BookStore.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpDelete("DeletBook/{BookId}")]
-        public IActionResult DeletBook(int BookId)
+        public IActionResult DeletBook(int BookId)//IActionResult is an interface that return multiple type of data.
         {
             try
             {
@@ -94,7 +94,7 @@ namespace BookStore.Controllers
 
         [Authorize(Roles = Role.User)]
         [HttpGet("GetAllBooks")]
-        public IActionResult GetAllBook()
+        public IActionResult GetAllBook()//IActionResult is an interface that return multiple type of data.
         {
             try
             {

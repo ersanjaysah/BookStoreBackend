@@ -17,7 +17,7 @@ namespace BookStore.Controllers
         }
 
         [HttpPost("AdminLogin")]
-        public IActionResult AdminLogin(AdminResponse adminResponse)
+        public IActionResult AdminLogin(AdminResponse adminResponse)//IActionResult is an interface that return multiple type of data.
         {
             try
             {
