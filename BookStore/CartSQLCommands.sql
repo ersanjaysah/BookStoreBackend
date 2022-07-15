@@ -10,7 +10,7 @@ BookId int Foreign Key References BookTable(BookId)
 
 select * from CartTable;
 
----create store procedure to addcart
+---create store procedure to addcart---
 create Procedure SPAddCart
 (
 @BooksQty int,

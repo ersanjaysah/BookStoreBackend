@@ -92,7 +92,7 @@ BEGIN
 	select * from BookTable;
 End;
 
-------------------------------------- Admin Commands ---------------------------------------------------------------
+------------------------------------- Admin Commands ----------------------------------------------------------------
 create Table Admins
 (
 	AdminId int Identity(1,1) primary key not null,

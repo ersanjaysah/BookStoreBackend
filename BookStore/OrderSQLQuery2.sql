@@ -10,7 +10,7 @@ create table Orders(
 	AddressId int not null foreign key (AddressId) references AddressTable(AddressId)
 );
 
---- store procedure of Add order
+---store procedure of Add order
 create procedure SPAddOrder
 (
 	@OrderBookQuantity int,
